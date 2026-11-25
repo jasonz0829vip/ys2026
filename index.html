@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>中老年健康养护问卷分析</title><style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#FAF6EF;color:#1E293B;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:17px;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 56px}
+.hero{background:linear-gradient(135deg,#0F766E,#115E59 60%,#134E4A);color:#fff;border-radius:0 0 24px 24px;padding:34px 22px 26px;margin:0 -16px 18px}
+.hero h1{font-size:27px;line-height:1.3;margin:0 0 8px;font-weight:800;letter-spacing:.5px}
+.hero p.sub{margin:0 0 20px;font-size:16px;color:#CCFBF1}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:14px 14px 12px}
+.kpi .v{font-size:29px;font-weight:800;line-height:1.1;color:#FDE68A}
+.kpi .k{font-size:14.5px;color:#E0F2F1;margin-top:4px}
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,246,239,.96);backdrop-filter:blur(6px);border-bottom:1px solid #E7DFD0;margin:0 -16px;padding:10px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;text-decoration:none;color:#0F766E;background:#fff;border:1.5px solid #0F766E33;border-radius:999px;padding:7px 13px;font-size:14.5px;font-weight:600;white-space:nowrap}
+.nav a.active{background:#0F766E;color:#fff;border-color:#0F766E}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 14px rgba(30,41,59,.08);padding:20px 18px;margin:18px 0}
+h2{font-size:21px;margin:0 0 4px;color:#0F766E;font-weight:800}
+h2 .no{display:inline-block;background:#0F766E;color:#fff;border-radius:8px;font-size:15px;padding:2px 9px;margin-right:8px;vertical-align:2px}
+.sec-sub{font-size:15px;color:#64748B;margin:0 0 14px}
+h3{font-size:18px;margin:22px 0 10px;color:#1E293B;font-weight:700}
+h3:first-child{margin-top:6px}
+.bar-row{margin:0 0 15px}
+.bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.bar-label{font-size:16px;font-weight:600}
+.bar-val{font-size:15.5px;font-weight:700;color:#0F766E;white-space:nowrap}
+.bar-val small{font-weight:500;color:#64748B;font-size:13.5px}
+.track{height:22px;background:#EFE7D8;border-radius:11px;overflow:hidden}
+.fill{height:100%;border-radius:11px;background:#0F766E}
+.fill.amber{background:#D97706}
+.fill.slate{background:#64748B}
+.fill.grad{background:linear-gradient(90deg,#99D5CE,#0F766E)}
+.note{font-size:13.5px;color:#64748B;margin:6px 0 0}
+.callout{background:#FDF0D5;border-left:5px solid #D97706;border-radius:10px;padding:14px 16px;margin:16px 0;font-size:16px}
+.callout b{color:#92400E}
+.callout.teal{background:#E6F4F1;border-left-color:#0F766E}
+.callout.teal b{color:#0F766E}
+.donut-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.legend{font-size:16px}
+.legend .li{margin:7px 0;display:flex;align-items:center;gap:8px}
+.dot{width:14px;height:14px;border-radius:4px;display:inline-block;flex:0 0 auto}
+.pair{margin:0 0 18px}
+.pair .p-label{font-size:16.5px;font-weight:700;margin-bottom:7px}
+.pair .bar-row{margin-bottom:9px}
+.grp{margin:0 0 20px}
+.grp-title{font-size:16.5px;font-weight:700;margin-bottom:8px}
+.grp-title small{color:#64748B;font-weight:500;font-size:14px}
+table.mini{width:100%;border-collapse:collapse;font-size:15.5px}
+table.mini th,table.mini td{padding:9px 8px;border-bottom:1px solid #EFE7D8;text-align:left;vertical-align:top}
+table.mini th{color:#64748B;font-size:14px;font-weight:600}
+table.mini td.num{white-space:nowrap;font-weight:700;color:#0F766E}
+.profile{display:grid;gap:16px}
+@media(min-width:640px){.profile{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:repeat(4,1fr)}}
+.pcard{border-radius:16px;padding:20px 18px;box-shadow:0 2px 14px rgba(30,41,59,.08)}
+.pcard.teal{background:#0F766E;color:#fff}
+.pcard.amber{background:#FFFBEB;border:2px solid #D97706}
+.pcard h3{color:inherit;margin-top:0}
+.pcard.amber h3{color:#92400E}
+.pcard .n{font-size:15px;opacity:.92}
+.pstat{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.25)}
+.pcard.amber .pstat{border-bottom-color:#FDE68A}
+.pstat:last-child{border-bottom:none}
+.pstat .pl{font-size:15.5px}
+.pstat .pv{font-size:21px;font-weight:800;white-space:nowrap}
+.advice{list-style:none;margin:0;padding:0;counter-reset:adv}
+.advice li{counter-increment:adv;position:relative;padding:0 0 16px 42px;font-size:16.5px}
+.advice li:last-child{padding-bottom:0}
+.advice li::before{content:counter(adv);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:#0F766E;color:#fff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.advice b{color:#0F766E}
+.method p{font-size:16px;margin:8px 0}
+footer{text-align:center;color:#94A3B8;font-size:13.5px;margin-top:26px}
+</style></head><body><div class="wrap"><header class="hero"><h1>中老年健康养护问卷分析</h1>
+<p class="sub">样本 8,801 份 · 2026年11月 · 微信问卷</p>
+<div class="kpis">
+<div class="kpi"><div class="v">8,801</div><div class="k">有效样本量</div></div>
+<div class="kpi"><div class="v">61.6%</div><div class="k">女性占比</div></div>
+<div class="kpi"><div class="v">58.7%</div><div class="k">66岁以上占比</div></div>
+<div class="kpi"><div class="v">74.1%</div><div class="k">曾经消费占比</div></div>
+</div></header><nav class="nav" id="jumpnav">
+<a href="#profile">人群画像</a><a href="#body">身体与关注</a><a href="#habit">养护习惯</a>
+<a href="#spend">消费分析</a><a href="#segments">关键人群</a><a href="#content">干货内容</a>
+<a href="#advice">运营建议</a><a href="#method">方法说明</a></nav><section id="profile" class="card"><h2><span class="no">①</span>人群画像</h2><p class="sec-sub">谁在回答这份问卷：女性为主，近六成在 66 岁以上，七成已退休多年。</p><h3>性别</h3><div class="donut-wrap">
+<svg width="168" height="168" viewBox="0 0 168 168" role="img" aria-label="性别分布：女 61.6%，男 38.4%">
+<circle cx="84" cy="84" r="70" fill="none" stroke="#EFE7D8" stroke-width="26"/>
+<circle cx="84" cy="84" r="70" fill="none" stroke="#0F766E" stroke-width="26"
+ stroke-dasharray="270.9 168.9" transform="rotate(-90 84 84)"/>
+<circle cx="84" cy="84" r="70" fill="none" stroke="#D97706" stroke-width="26"
+ stroke-dasharray="168.9 270.9" stroke-dashoffset="-270.9" transform="rotate(-90 84 84)"/>
+<text x="84" y="80" text-anchor="middle" font-size="24" font-weight="800" fill="#1E293B">女 61.6%</text>
+<text x="84" y="104" text-anchor="middle" font-size="14" fill="#64748B">5,418 人</text>
+</svg>
+<div class="legend">
+<div class="li"><span class="dot" style="background:#0F766E"></span>女：5,418 人 · 61.6%</div>
+<div class="li"><span class="dot" style="background:#D97706"></span>男：3,383 人 · 38.4%</div>
+</div></div><h3>年龄段</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">66岁以上</span><span class="bar-val">5,169人 · 58.7%</span></div><div class="track"><div class="fill teal" style="width:58.7%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">61-65岁</span><span class="bar-val">2,038人 · 23.2%</span></div><div class="track"><div class="fill teal" style="width:23.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">56-60岁</span><span class="bar-val">900人 · 10.2%</span></div><div class="track"><div class="fill teal" style="width:10.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">50-55岁</span><span class="bar-val">694人 · 7.9%</span></div><div class="track"><div class="fill teal" style="width:7.9%"></div></div></div><p class="note">单选题，合计 100%。66 岁以上是绝对主力，占 58.7%。</p><h3>生活状态</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">退休多年，作息规律清闲</span><span class="bar-val">6,228人 · 70.8%</span></div><div class="track"><div class="fill teal" style="width:70.8%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">刚退休，适应休闲生活</span><span class="bar-val">1,336人 · 15.2%</span></div><div class="track"><div class="fill teal" style="width:15.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">在职/返聘，日常工作忙碌</span><span class="bar-val">785人 · 8.9%</span></div><div class="track"><div class="fill teal" style="width:8.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">常年居家，少有外出</span><span class="bar-val">649人 · 7.4%</span></div><div class="track"><div class="fill teal" style="width:7.4%"></div></div></div><p class="note">单选题，合计 100%。</p><h3>日常主要生活重心</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">休闲娱乐（旅游、棋牌、跳舞等）</span><span class="bar-val">3,281人 · 37.3%</span></div><div class="track"><div class="fill amber" style="width:37.3%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">居家休闲、简单度日</span><span class="bar-val">2,722人 · 30.9%</span></div><div class="track"><div class="fill amber" style="width:30.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">养生静养、注重身体保养</span><span class="bar-val">2,155人 · 24.5%</span></div><div class="track"><div class="fill amber" style="width:24.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">社交聚会、邻里往来</span><span class="bar-val">1,958人 · 22.2%</span></div><div class="track"><div class="fill amber" style="width:22.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">带孙辈/照顾家人</span><span class="bar-val">1,477人 · 16.8%</span></div><div class="track"><div class="fill amber" style="width:16.8%"></div></div></div><p class="note">多选题，人均勾选 1.32 项；百分比为占受访者比例，合计超过 100%。</p><h3>男女关注差异（前三名）</h3><table class="mini"><tr><th>女性</th><th>男性</th></tr><tr><td>增强体质、提升抵抗力：3,196人 · 59.0%<br>改善睡眠、安神助眠：1,312人 · 24.2%<br>养护关节、腰腿舒适：1,244人 · 23.0%<br></td><td>增强体质、提升抵抗力：1,941人 · 57.4%<br>提升精力、改善疲惫状态：724人 · 21.4%<br>改善睡眠、安神助眠：686人 · 20.3%<br></td></tr></table><p class="note">男女第一关注都是增强体质；女性更关注睡眠与关节，男性更关注精力。</p></section><section id="body" class="card"><h2><span class="no">②</span>身体状态与关注方向</h2><p class="sec-sub">多数人自认身体良好，但关注点普遍跑在症状前面——这是预防型需求。</p><h3>日常身体最常出现的轻微状态</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">无明显不适，身体状态良好</span><span class="bar-val">5,542人 · 63.0%</span></div><div class="track"><div class="fill teal" style="width:63.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">睡眠不佳（入睡难、易醒、多梦）</span><span class="bar-val">1,528人 · 17.4%</span></div><div class="track"><div class="fill teal" style="width:17.4%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">视力模糊、眼干眼花</span><span class="bar-val">1,055人 · 12.0%</span></div><div class="track"><div class="fill teal" style="width:12.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">容易疲惫、精力不足，稍微活动就累</span><span class="bar-val">1,032人 · 11.7%</span></div><div class="track"><div class="fill teal" style="width:11.7%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">关节腰腿酸胀、僵硬，上下楼不适</span><span class="bar-val">921人 · 10.5%</span></div><div class="track"><div class="fill teal" style="width:10.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">肠胃偏弱、消化不好、容易腹胀</span><span class="bar-val">613人 · 7.0%</span></div><div class="track"><div class="fill teal" style="width:7.0%"></div></div></div><p class="note">多选题，人均勾选 1.21 项；百分比为占受访者比例。63.0% 自认无明显不适。</p><h3>日常养生最关注的方向</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">增强体质、提升抵抗力</span><span class="bar-val">5,137人 · 58.4%</span></div><div class="track"><div class="fill amber" style="width:58.4%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">改善睡眠、安神助眠</span><span class="bar-val">1,998人 · 22.7%</span></div><div class="track"><div class="fill amber" style="width:22.7%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">养护关节、腰腿舒适</span><span class="bar-val">1,771人 · 20.1%</span></div><div class="track"><div class="fill amber" style="width:20.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">提升精力、改善疲惫状态</span><span class="bar-val">1,680人 · 19.1%</span></div><div class="track"><div class="fill amber" style="width:19.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">暂无特别关注的方向</span><span class="bar-val">1,285人 · 14.6%</span></div><div class="track"><div class="fill amber" style="width:14.6%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">调理肠胃、促进吸收</span><span class="bar-val">1,236人 · 14.0%</span></div><div class="track"><div class="fill amber" style="width:14.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">护眼润目、缓解干涩</span><span class="bar-val">1,001人 · 11.4%</span></div><div class="track"><div class="fill amber" style="width:11.4%"></div></div></div><p class="note">多选题，人均勾选 1.6 项；百分比为占受访者比例。增强体质 58.4% 断层第一。</p><h3>症状 vs 关注：关注跑在症状前面</h3><div class="pair"><div class="p-label">睡眠</div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有症状</span><span class="bar-val">1,528人 · 17.4%</span></div>
+<div class="track"><div class="fill" style="width:17.4%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有关注</span><span class="bar-val">1,998人 · 22.7%</span></div>
+<div class="track"><div class="fill amber" style="width:22.7%"></div></div></div></div><div class="pair"><div class="p-label">关节腰腿</div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有症状</span><span class="bar-val">921人 · 10.5%</span></div>
+<div class="track"><div class="fill" style="width:10.5%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有关注</span><span class="bar-val">1,771人 · 20.1%</span></div>
+<div class="track"><div class="fill amber" style="width:20.1%"></div></div></div></div><div class="pair"><div class="p-label">精力疲惫</div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有症状</span><span class="bar-val">1,032人 · 11.7%</span></div>
+<div class="track"><div class="fill" style="width:11.7%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有关注</span><span class="bar-val">1,680人 · 19.1%</span></div>
+<div class="track"><div class="fill amber" style="width:19.1%"></div></div></div></div><div class="pair"><div class="p-label">肠胃</div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有症状</span><span class="bar-val">613人 · 7.0%</span></div>
+<div class="track"><div class="fill" style="width:7.0%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有关注</span><span class="bar-val">1,236人 · 14.0%</span></div>
+<div class="track"><div class="fill amber" style="width:14.0%"></div></div></div></div><div class="pair"><div class="p-label">眼睛</div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有症状</span><span class="bar-val">1,055人 · 12.0%</span></div>
+<div class="track"><div class="fill" style="width:12.0%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">有关注</span><span class="bar-val">1,001人 · 11.4%</span></div>
+<div class="track"><div class="fill amber" style="width:11.4%"></div></div></div></div><div class="callout"><b>关键洞察：</b>除眼睛外，关注人数都明显多于有症状人数——关节 921 人有症状 vs 1,771 人关注，肠胃 613 人 vs 1,236 人，睡眠 1,528 人 vs 1,998 人，精力疲惫 1,032 人 vs 1,680 人。大家不是等出了问题才想养护，而是提前预防。眼睛是唯一例外：1,055 人有症状 vs 1,001 人关注。</div><h3>不同年龄最关注什么（前三名）</h3><table class="mini"><tr><th>年龄段</th><th>第 1</th><th>第 2</th><th>第 3</th></tr><tr><td><b>50-55岁</b></td><td>增强体质、提升抵抗力<br><span class="num">389人 · 56.1%</span></td><td>提升精力、改善疲惫状态<br><span class="num">271人 · 39.0%</span></td><td>改善睡眠、安神助眠<br><span class="num">265人 · 38.2%</span></td></tr><tr><td><b>56-60岁</b></td><td>增强体质、提升抵抗力<br><span class="num">568人 · 63.1%</span></td><td>改善睡眠、安神助眠<br><span class="num">282人 · 31.3%</span></td><td>养护关节、腰腿舒适<br><span class="num">233人 · 25.9%</span></td></tr><tr><td><b>61-65岁</b></td><td>增强体质、提升抵抗力<br><span class="num">1,219人 · 59.8%</span></td><td>改善睡眠、安神助眠<br><span class="num">459人 · 22.5%</span></td><td>养护关节、腰腿舒适<br><span class="num">394人 · 19.3%</span></td></tr><tr><td><b>66岁以上</b></td><td>增强体质、提升抵抗力<br><span class="num">2,961人 · 57.3%</span></td><td>改善睡眠、安神助眠<br><span class="num">992人 · 19.2%</span></td><td>养护关节、腰腿舒适<br><span class="num">943人 · 18.2%</span></td></tr></table><p class="note">50–55 岁组精力关注 39.0%，显著高于其他年龄段；睡眠关注 38.2% 也居各组之首。</p></section><section id="habit" class="card"><h2><span class="no">③</span>养护习惯与服用行为</h2><p class="sec-sub">近四成人长期坚持保养；一半人保持服用补充品的习惯。</p><h3>平时有没有主动养护身体的习惯</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">长期坚持，非常注重日常保养</span><span class="bar-val">3,299人 · 37.5%</span></div><div class="track"><div class="fill teal" style="width:37.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">很少在意，顺其自然</span><span class="bar-val">2,743人 · 31.2%</span></div><div class="track"><div class="fill teal" style="width:31.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">偶尔关注，不舒服时会调理</span><span class="bar-val">2,554人 · 29.0%</span></div><div class="track"><div class="fill teal" style="width:29.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">觉得没必要，从不保养</span><span class="bar-val">205人 · 2.3%</span></div><div class="track"><div class="fill teal" style="width:2.3%"></div></div></div><p class="note">单选题，合计 100%。</p><h3>是否坚持服用健康养护补充品</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">很少服用</span><span class="bar-val">2,773人 · 31.5%</span></div><div class="track"><div class="fill amber" style="width:31.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">长期规律服用</span><span class="bar-val">2,599人 · 29.5%</span></div><div class="track"><div class="fill amber" style="width:29.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">偶尔间断服用</span><span class="bar-val">1,981人 · 22.5%</span></div><div class="track"><div class="fill amber" style="width:22.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">从未服用</span><span class="bar-val">1,448人 · 16.5%</span></div><div class="track"><div class="fill amber" style="width:16.5%"></div></div></div><p class="note">单选题，合计 100%。长期规律服用 29.5% + 偶尔间断服用 22.5% = 52.0% 保持服用习惯。</p><h3>越注重保养，越可能长期规律服用</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">长期坚持，非常注重日常保养（n=3,299）</span><span class="bar-val">46.0% 长期规律服用</span></div><div class="track"><div class="fill grad" style="width:46.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">偶尔关注，不舒服时会调理（n=2,554）</span><span class="bar-val">25.6% 长期规律服用</span></div><div class="track"><div class="fill grad" style="width:25.6%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">很少在意，顺其自然（n=2,743）</span><span class="bar-val">15.1% 长期规律服用</span></div><div class="track"><div class="fill grad" style="width:15.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">觉得没必要，从不保养（n=205）</span><span class="bar-val">5.9% 长期规律服用</span></div><div class="track"><div class="fill grad" style="width:5.9%"></div></div></div><p class="note">长期规律服用占比从 46.0% 一路降到 5.9%：养护意识直接决定服用行为。</p></section><section id="spend" class="card"><h2><span class="no">④</span>消费分析</h2><p class="sec-sub">曾经消费的占 74.1%；高消费（≥3,000 元）共 1,515 人，占 17.2%。</p><h3>过往单次购买健康养护类产品最高价位</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">基本没有消费</span><span class="bar-val">2,276人 · 25.9%</span></div><div class="track"><div class="fill teal" style="width:25.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">500元以内</span><span class="bar-val">1,839人 · 20.9%</span></div><div class="track"><div class="fill teal" style="width:20.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">500-1000元</span><span class="bar-val">1,837人 · 20.9%</span></div><div class="track"><div class="fill teal" style="width:20.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">1000-3000元</span><span class="bar-val">1,334人 · 15.2%</span></div><div class="track"><div class="fill teal" style="width:15.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">3000-5000元</span><span class="bar-val">679人 · 7.7%</span></div><div class="track"><div class="fill amber" style="width:7.7%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">5000-10000元</span><span class="bar-val">479人 · 5.4%</span></div><div class="track"><div class="fill amber" style="width:5.4%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">10000元以上</span><span class="bar-val">357人 · 4.1%</span></div><div class="track"><div class="fill amber" style="width:4.1%"></div></div></div><div class="callout teal"><b>高消费人群：</b>单次 3,000 元以上共 1,515 人，占 17.2%（3,000–5,000 元 679 人 · 7.7%；5,000–10,000 元 479 人 · 5.4%；10,000 元以上 357 人 · 4.1%）。基本没有消费的占 25.9%，曾经消费的占 74.1%。</div><h3>年龄 × 消费：越年长，高消费与从不购买同时越多</h3><div class="grp"><div class="grp-title">50-55岁 <small>· n=694</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费（≥3,000元）</span><span class="bar-val">84人 · 12.1%</span></div>
+<div class="track"><div class="fill" style="width:12.1%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">从不购买</span><span class="bar-val">123人 · 17.7%</span></div>
+<div class="track"><div class="fill amber" style="width:17.7%"></div></div></div></div><div class="grp"><div class="grp-title">56-60岁 <small>· n=900</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费（≥3,000元）</span><span class="bar-val">129人 · 14.3%</span></div>
+<div class="track"><div class="fill" style="width:14.3%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">从不购买</span><span class="bar-val">192人 · 21.3%</span></div>
+<div class="track"><div class="fill amber" style="width:21.3%"></div></div></div></div><div class="grp"><div class="grp-title">61-65岁 <small>· n=2,038</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费（≥3,000元）</span><span class="bar-val">362人 · 17.8%</span></div>
+<div class="track"><div class="fill" style="width:17.8%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">从不购买</span><span class="bar-val">575人 · 28.2%</span></div>
+<div class="track"><div class="fill amber" style="width:28.2%"></div></div></div></div><div class="grp"><div class="grp-title">66岁以上 <small>· n=5,169</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费（≥3,000元）</span><span class="bar-val">940人 · 18.2%</span></div>
+<div class="track"><div class="fill" style="width:18.2%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">从不购买</span><span class="bar-val">1,386人 · 26.8%</span></div>
+<div class="track"><div class="fill amber" style="width:26.8%"></div></div></div></div><h3>服用习惯 × 消费：长期规律服用者最肯花钱</h3><div class="grp"><div class="grp-title">长期规律服用 <small>· n=2,599</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费</span><span class="bar-val">29.5%</span></div>
+<div class="track"><div class="fill" style="width:29.5%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">中档消费</span><span class="bar-val">49.6%</span></div>
+<div class="track"><div class="fill amber" style="width:49.6%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">无消费</span><span class="bar-val">3.7%</span></div>
+<div class="track"><div class="fill slate" style="width:3.7%"></div></div></div></div><div class="grp"><div class="grp-title">偶尔间断服用 <small>· n=1,981</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费</span><span class="bar-val">19.1%</span></div>
+<div class="track"><div class="fill" style="width:19.1%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">中档消费</span><span class="bar-val">49.1%</span></div>
+<div class="track"><div class="fill amber" style="width:49.1%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">无消费</span><span class="bar-val">6.1%</span></div>
+<div class="track"><div class="fill slate" style="width:6.1%"></div></div></div></div><div class="grp"><div class="grp-title">很少服用 <small>· n=2,773</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费</span><span class="bar-val">10.6%</span></div>
+<div class="track"><div class="fill" style="width:10.6%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">中档消费</span><span class="bar-val">28.7%</span></div>
+<div class="track"><div class="fill amber" style="width:28.7%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">无消费</span><span class="bar-val">33.9%</span></div>
+<div class="track"><div class="fill slate" style="width:33.9%"></div></div></div></div><div class="grp"><div class="grp-title">从未服用 <small>· n=1,448</small></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">高消费</span><span class="bar-val">5.2%</span></div>
+<div class="track"><div class="fill" style="width:5.2%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">中档消费</span><span class="bar-val">7.7%</span></div>
+<div class="track"><div class="fill amber" style="width:7.7%"></div></div></div>
+<div class="bar-row"><div class="bar-head"><span class="bar-label">无消费</span><span class="bar-val">77.3%</span></div>
+<div class="track"><div class="fill slate" style="width:77.3%"></div></div></div></div><p class="note">长期规律服用者高消费 29.5%、无消费仅 3.7%；从未服用者高消费 5.2%、无消费 77.3%。</p><h3>购买由谁做主</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">全部自己选购、自己做主</span><span class="bar-val">4,912人 · 55.8%</span></div><div class="track"><div class="fill teal" style="width:55.8%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">基本不购买</span><span class="bar-val">2,560人 · 29.1%</span></div><div class="track"><div class="fill teal" style="width:29.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">主要由子女选购赠送</span><span class="bar-val">707人 · 8.0%</span></div><div class="track"><div class="fill teal" style="width:8.0%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">自己挑选，子女帮忙购买</span><span class="bar-val">622人 · 7.1%</span></div><div class="track"><div class="fill teal" style="width:7.1%"></div></div></div><p class="note">单选题，合计 100%。55.8% 全部自己选购、自己做主；29.1% 基本不购买。</p><h3>谁做主 × 高消费：自己做主的人最肯花钱</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">全部自己选购、自己做主（n=4,912）</span><span class="bar-val">24.9% 高消费</span></div><div class="track"><div class="fill teal" style="width:24.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">主要由子女选购赠送（n=707）</span><span class="bar-val">13.3% 高消费</span></div><div class="track"><div class="fill teal" style="width:13.3%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">自己挑选，子女帮忙购买（n=622）</span><span class="bar-val">18.5% 高消费</span></div><div class="track"><div class="fill teal" style="width:18.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">基本不购买（n=2,560）</span><span class="bar-val">3.3% 高消费</span></div><div class="track"><div class="fill teal" style="width:3.3%"></div></div></div><h3>更偏好哪种类型产品</h3><div class="bar-row"><div class="bar-head"><span class="bar-label">暂无偏好、随意选择</span><span class="bar-val">3,598人 · 40.9%</span></div><div class="track"><div class="fill amber" style="width:40.9%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">营养膳食补充类（维生素、钙片、鱼油、叶黄素、护肝片等）</span><span class="bar-val">2,413人 · 27.4%</span></div><div class="track"><div class="fill amber" style="width:27.4%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">两种都会搭配选择</span><span class="bar-val">2,046人 · 23.2%</span></div><div class="track"><div class="fill amber" style="width:23.2%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">滋补中药材类（枸杞、阿胶、三七、石斛、野山参、冬虫夏草等</span><span class="bar-val">744人 · 8.5%</span></div><div class="track"><div class="fill amber" style="width:8.5%"></div></div></div><p class="note">单选题，合计 100%。40.9% 暂无偏好、随意选择——最依赖推荐与信任。</p></section><section id="segments" class="card"><h2><span class="no">⑤</span>两个关键人群</h2><p class="sec-sub">一头是肯花钱的高消费群体，一头是还没开始买的沉默多数。</p><div class="profile"><div class="pcard teal"><h3>高消费群体</h3><div class="n">单次 ≥3,000 元 · n=1,515（占 17.2%）</div>
+<div class="pstat"><span class="pl">女性</span><span class="pv">62.3%</span></div>
+<div class="pstat"><span class="pl">66 岁以上</span><span class="pv">62.0%</span></div>
+<div class="pstat"><span class="pl">长期坚持保养</span><span class="pv">48.4%</span></div>
+<div class="pstat"><span class="pl">长期规律服用</span><span class="pv">50.6%</span></div>
+<div class="pstat"><span class="pl">全部自己选购、自己做主</span><span class="pv">80.6%</span></div>
+<div class="pstat"><span class="pl">两种类型搭配选择</span><span class="pv">40.5%</span></div></div><div class="pcard amber"><h3>从不购买群体</h3><div class="n" style="color:#64748B">基本不购买 · n=2,560（占 29.1%）</div>
+<div class="pstat"><span class="pl">66 岁以上</span><span class="pv">58.2%</span></div>
+<div class="pstat"><span class="pl">很少在意保养</span><span class="pv">47.2%</span></div>
+<div class="pstat"><span class="pl">很少或从未服用补充品</span><span class="pv">90.9%</span></div>
+<div class="pstat"><span class="pl">暂无特别关注的方向</span><span class="pv">27.1%</span></div>
+<div class="pstat"><span class="pl">最想收通用健康科普</span><span class="pv">56.8%</span></div></div></div><div class="callout"><b>一句话：</b>高消费群体是“自己做主、长期坚持、规律服用”的铁三角；从不购买群体不是没钱，而是不在意、没习惯、没方向——先给科普养信任，再谈产品。</div></section><section id="content" class="card"><h2><span class="no">⑥</span>想收到的免费健康干货</h2><p class="sec-sub">通用科普最受欢迎，免疫力内容紧随其后。</p><div class="bar-row"><div class="bar-head"><span class="bar-label">通用中老年健康科普</span><span class="bar-val">3,902人 · 44.3%</span></div><div class="track"><div class="fill amber" style="width:44.3%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">免疫力提升、换季养生方法</span><span class="bar-val">3,393人 · 38.6%</span></div><div class="track"><div class="fill amber" style="width:38.6%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">中老年睡眠调理、精力提升技巧</span><span class="bar-val">1,948人 · 22.1%</span></div><div class="track"><div class="fill amber" style="width:22.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">肠胃调理、四季食补食谱</span><span class="bar-val">1,632人 · 18.5%</span></div><div class="track"><div class="fill amber" style="width:18.5%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">关节养护、腰腿保养常识</span><span class="bar-val">1,595人 · 18.1%</span></div><div class="track"><div class="fill amber" style="width:18.1%"></div></div></div><div class="bar-row"><div class="bar-head"><span class="bar-label">眼部养护、日常护眼知识</span><span class="bar-val">1,079人 · 12.3%</span></div><div class="track"><div class="fill amber" style="width:12.3%"></div></div></div><p class="note">多选题，人均勾选 1.54 项；百分比为占受访者比例。</p></section><section id="advice" class="card"><h2><span class="no">⑦</span>运营建议</h2><p class="sec-sub">给微信私域运营的结论：先讲免疫力，先养信任，再谈转化。</p><ol class="advice">
+<li><b>免疫力是第一主线：</b>58.4% 最关注增强体质、提升抵抗力，远超第二名睡眠 22.7%——内容选题与选品都先围绕免疫力讲。</li>
+<li><b>讲预防，不只讲“治不适”：</b>63.0% 自认身体状态良好，但 58.4% 仍关注增强体质；需求是预防型的，话术要落在“防未病”上。</li>
+<li><b>40.9% 对产品“暂无偏好、随意选择”，高度依赖推荐与信任：</b>专业背书、真实口碑和持续陪伴，比单纯比价更重要。</li>
+<li><b>长期规律服用者是高价值核心：</b>高消费占比 29.5%，且仅 3.7% 无消费；优先维护这批人，做好复购提醒与搭配推荐。</li>
+<li><b>55.8% 全部自己选购、自己做主：</b>沟通对象是本人而非子女，文案直接讲给长辈听，别绕弯子。</li>
+<li><b>29.1% 基本不购买，先用免费科普养信任：</b>其中 56.8% 最想收通用健康科普，别一上来就推产品，先给干货再谈转化。</li>
+<li><b>50–55 岁组值得单独运营：</b>精力关注 39.0%，显著高于其他年龄段，睡眠关注 38.2% 也居各组之首；在职/返聘人群多，讲精力与睡眠更对路。</li>
+</ol></section><section id="method" class="card"><h2><span class="no">⑧</span>方法与说明</h2><p class="sec-sub">数据口径与隐私说明。</p><p>样本：2026 年 11 月微信问卷，有效样本 8,801 份，按 unionid 去重后无重复。</p>
+<p>多选题百分比为占受访者比例，合计超过 100%；单选题百分比合计 100%。</p>
+<p>本页仅含聚合统计，不含任何姓名、手机号、unionid 等个人信息；原始问卷文件未上传。</p></section><footer>中老年健康养护问卷分析 · 样本 8,801 份 · 2026年11月<br>本页仅含聚合统计，不含任何个人信息</footer><script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll('#jumpnav a'));
+  var map={}; links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  if(!('IntersectionObserver' in window)) return;
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('active');});
+        var a=map[e.target.id]; if(a) a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  Object.keys(map).forEach(function(id){var el=document.getElementById(id); if(el) obs.observe(el);});
+})();
+</script></div></body></html>
